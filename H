@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pocket Tutor</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f7f8fc;color:#202938}
+header{padding:16px;display:flex;align-items:center;gap:12px;background:white;border-bottom:1px solid #e5e7eb}
+.logo{background:#e4ecff;border-radius:13px;padding:12px;font-size:23px}
+h1{font-size:21px;margin:0}
+.sub{font-size:12px;color:#687386;margin-top:5px}
+main{max-width:800px;margin:auto;padding:22px 16px 120px}
+.welcome{text-align:center;margin:35px 0}
+.welcome h2{font-size:27px;margin-bottom:8px}
+.welcome p{color:#687386}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:white;border:1px solid #e1e5ed;border-radius:16px;padding:18px 12px;text-align:left;font-size:15px;cursor:pointer;color:#202938}
+.card span{display:block;font-size:25px;margin-bottom:10px}
+#chat{margin-top:24px}
+.message{padding:14px;border-radius:15px;margin:12px 0;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+.user{background:#e1eaff;margin-left:15%}
+.ai{background:white;border:1px solid #e1e5ed;margin-right:8%}
+.composer{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #e5e7eb;padding:12px}
+form{max-width:800px;margin:auto;display:flex;gap:8px}
+input{flex:1;min-width:0;border:1px solid #d5d9e2;border-radius:14px;padding:14px;font-size:16px;outline:none}
+button.send{border:0;border-radius:13px;background:#285fe8;color:white;padding:0 19px;font-size:16px}
+.note{text-align:center;font-size:11px;color:#8991a0;margin:8px 0 0}
+@media(min-width:600px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">📘</div>
+<div><h1>Pocket Tutor</h1><div class="sub">آپ کا ذاتی AI مددگار</div></div>
+</header>
+<main>
+<section class="welcome">
+<h2>آج میں آپ کی کیا مدد کروں؟</h2>
+<p>سوال پوچھیں، کچھ نیا سیکھیں یا کوئی خیال دریافت کریں۔</p>
+</section>
+<section class="grid">
+<button class="card" data-q="میرا ہوم ورک آسان اردو میں سمجھاؤ۔"><span>📚</span>ہوم ورک</button>
+<button class="card" data-q="یہ موضوع آسان الفاظ میں سمجھاؤ۔"><span>💡</span>معلومات</button>
+<button class="card" data-q="ایک دلچسپ اور سبق آموز کہانی لکھو۔"><span>📖</span>کہانی</button>
+<button class="card" data-q="مجھے نئی ویڈیوز بنانے کے تخلیقی خیالات دو۔"><span>🎬</span>مواد کے خیالات</button>
+<button class="card" data-q="اس متن کا اردو میں ترجمہ کرو۔"><span>🌐</span>ترجمہ</button>
+<button class="card" data-q="میرے لیے ایک مختصر کوئز بناؤ۔"><span>🧠</span>کوئز</button>
+<button class="card" data-q="میرے لیے پڑھائی کا منصوبہ بناؤ۔"><span>🗓️</span>مطالعے کا منصوبہ</button>
+<button class="card" data-q="مجھے پروگرامنگ سیکھنے میں مدد دو۔"><span>💻</span>پروگرامنگ</button>
+</section>
+<section id="chat"></section>
+</main>
+<div class="composer">
+<form id="form">
+<input id="q" placeholder="یہاں اپنا سوال لکھیں..." autocomplete="off" required>
+<button class="send" type="submit">بھیجیں</button>
+</form>
+<p class="note">Pocket Tutor · ابتدائی نمونہ</p>
+</div>
+<script>
+const form=document.getElementById('form');
+const input=document.getElementById('q');
+const chat=document.getElementById('chat');
+function message(text,kind){
+const el=document.createElement('div');
+el.className='message '+kind;
+el.textContent=text;
+chat.appendChild(el);
+el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+form.addEventListener('submit',e=>{
+e.preventDefault();
+const q=input.value.trim();
+if(!q)return;
+message(q,'user');
+message('Pocket Tutor کا انٹرفیس تیار ہے۔ اصل AI جواب حاصل کرنے کے لیے مقامی AI ماڈل اور اس سے رابطے کا نظام ابھی منسلک کرنا باقی ہے۔','ai');
+input.value='';
+});
+document.querySelectorAll('[data-q]').forEach(b=>{
+b.addEventListener('click',()=>{
+input.value=b.dataset.q;
+input.focus();
+});
+});
+</script>
+</body>
+</html>
